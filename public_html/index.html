@@ -10,6 +10,9 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="src/Lupus.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.0.min.js"
+  integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I="
+  crossorigin="anonymous"></script>
     </head>
     <body>
         <div>This is a Canis Test</div>
@@ -17,67 +20,7 @@ and open the template in the editor.
             <input id="text" type="text" />
             <input id="radio" type="radio" />
         </div>
-        <script type="text/javascript">
-            
-            // CANIS.debounce Test
-            window.addEventListener('resize', CANIS.debounce(function () {
-                console.log('RESIZED');
-            }, 250));
-            
-            // CANIS.poll Test
-            CANIS.poll(function () {
-                return CANIS.get('https://jsonplaceholder.typicode.com/posts', {
-                    name: 'test 1',
-                    value: 1
-                });
-            }, 1000, 100).then(function (response) {
-                console.log('GET', response);
-            });
-            CANIS.poll(function () {
-                return CANIS.post('https://jsonplaceholder.typicode.com/posts', {
-                    name: 'test 2',
-                    value: 2
-                });
-            }, 2000, 200).then(function (response) {
-                console.log('POST', response);
-            });
-            CANIS.poll(function () {
-                return CANIS.put('https://jsonplaceholder.typicode.com/posts/1', {
-                    name: 'test 3',
-                    value: 3
-                });
-            }, 3000, 300).then(function (response) {
-                console.log('PUT', response);
-            });
-            CANIS.poll(function () {
-                return CANIS.delete('https://jsonplaceholder.typicode.com/posts/1', {
-                    name: 'test 4',
-                    value: 4
-                });
-            }, 4000, 400).then(function (response) {
-                console.log('DELETE', response);
-            });
-            
-            // CANIS.once Test
-            var fireOnce = CANIS.once(function () {
-                console.log('Fired');
-            });
-            fireOnce();
-            fireOnce();
-            
-            // CANIS.getAbsoluteUrl Test
-            console.log('URL /', CANIS.getAbsoluteUrl('/test'));
-            console.log('URL ./', CANIS.getAbsoluteUrl('./test'));
-            console.log('URL ../', CANIS.getAbsoluteUrl('../test'));
-            
-            // CANIS.insertStyle Test
-            CANIS.insertStyle("body { color: red; }");
-            
-            // CANIS.matchesSelector Test
-            console.log('#text is :text', CANIS.matchesSelector(document.getElementById("text"), "input[type=text]"));
-            console.log('#text is :radio', CANIS.matchesSelector(document.getElementById("text"), "input[type=radio]"));
-            console.log('#radio is :text', CANIS.matchesSelector(document.getElementById("radio"), "input[type=text]"));
-            console.log('#radio is :radio', CANIS.matchesSelector(document.getElementById("radio"), "input[type=radio]"));
+        <script type="text/javascript" src="test/test.js">
         </script>
     </body>
 </html>
