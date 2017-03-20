@@ -92,6 +92,22 @@ var CANIS = (function (self) {
         return str.join("&");
     };
     
+    function handleRequest(data, type) {
+        var body;
+        type = type || typeof data;
+        switch (type) {
+            case 'object':
+                body = JSON.stringify(data);
+                break;
+            case 'string':
+                body = new FormData(document.getElementById('string'));
+                break;
+            default:
+                body = '?' + self.serialize(data);
+        }
+        return body;
+    };
+    
     function handleResponse(response, type) {
         var value;
         switch (type) {
@@ -100,6 +116,9 @@ var CANIS = (function (self) {
                 break;
             case 'xml':
                 value = response.text();
+                break;
+            case 'blob':
+                value = response.blob();
                 break;
             // Add more resposeType 
             default:
@@ -110,15 +129,13 @@ var CANIS = (function (self) {
     
     self.get = function (url, data, responseType) {
         return new Promise(function (resolve, reject) {
-            fetch(url, {
+            fetch(url + (handleRequest(data, 'uri') || ''), {
                 method: 'GET'
             }).then(function (response) {
                 return handleResponse(response, responseType || 'json');
             }).then(function (e) {
-                console.log('SDSDSD', e);
                 resolve(e);
             }).catch(function (err) {
-                console.log('ERROR', err);
                 reject(Error("Network Error"));
             });
         });
@@ -126,61 +143,46 @@ var CANIS = (function (self) {
     
     self.post = function (url, data, responseType) {
         return new Promise(function (resolve, reject) {
-            var req = new XMLHttpRequest();
-            req.open('POST', url, true);
-            req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            
-            req.onreadystatechange = function () {
-                if(req.readyState == 4) {
-                    resolve(self.strTo(req.responseText, responseType || 'json'));
-                }
-            };
-            
-            req.onerror = function() {
+            fetch(url, {
+                method: 'POST',
+                body: handleRequest(data)
+            }).then(function (response) {
+                return handleResponse(response, responseType || 'json');
+            }).then(function (e) {
+                resolve(e);
+            }).catch(function (err) {
                 reject(Error("Network Error"));
-            };
-            
-            req.send(self.serialize(data));
+            });
         });
     };
     
     self.put = function (url, data, responseType) {
         return new Promise(function (resolve, reject) {
-            var req = new XMLHttpRequest();
-            req.open('PUT', url, true);
-            req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            
-            req.onreadystatechange = function () {
-                if(req.readyState == 4) {
-                    resolve(self.strTo(req.responseText, responseType || 'json'));
-                }
-            };
-            
-            req.onerror = function() {
+            fetch(url, {
+                method: 'PUT',
+                body: handleRequest(data)
+            }).then(function (response) {
+                return handleResponse(response, responseType || 'json');
+            }).then(function (e) {
+                resolve(e);
+            }).catch(function (err) {
                 reject(Error("Network Error"));
-            };
-            
-            req.send(self.serialize(data));
+            });
         });
     };
     
     self.delete = function (url, data, responseType) {
-        return new Promise(function(resolve, reject) {
-            var req = new XMLHttpRequest();
-            req.open('DELETE', url, true);
-            req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            
-            req.onreadystatechange = function () {
-                if (req.readyState == 4) {
-                    resolve(self.strTo(req.responseText, responseType || 'json'));
-                }
-            };
-            
-            req.onerror = function() {
+        return new Promise(function (resolve, reject) {
+            fetch(url, {
+                method: 'DELETE',
+                body: handleRequest(data)
+            }).then(function (response) {
+                return handleResponse(response, responseType || 'json');
+            }).then(function (e) {
+                resolve(e);
+            }).catch(function (err) {
                 reject(Error("Network Error"));
-            };
-            
-            req.send(self.serialize(data));
+            });
         });
     };
     

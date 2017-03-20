@@ -31,7 +31,7 @@ and open the template in the editor.
                     value: 1
                 });
             }, 1000, 100).then(function (response) {
-                console.log('RESPONSE 1', response);
+                console.log('GET', response);
             });
             CANIS.poll(function () {
                 return CANIS.post('https://jsonplaceholder.typicode.com/posts', {
@@ -39,7 +39,7 @@ and open the template in the editor.
                     value: 2
                 });
             }, 2000, 200).then(function (response) {
-                console.log('RESPONSE 2', response);
+                console.log('POST', response);
             });
             CANIS.poll(function () {
                 return CANIS.put('https://jsonplaceholder.typicode.com/posts/1', {
@@ -47,7 +47,7 @@ and open the template in the editor.
                     value: 3
                 });
             }, 3000, 300).then(function (response) {
-                console.log('RESPONSE 3', response);
+                console.log('PUT', response);
             });
             CANIS.poll(function () {
                 return CANIS.delete('https://jsonplaceholder.typicode.com/posts/1', {
@@ -55,7 +55,7 @@ and open the template in the editor.
                     value: 4
                 });
             }, 4000, 400).then(function (response) {
-                console.log('RESPONSE 4', response);
+                console.log('DELETE', response);
             });
             
             // CANIS.once Test
